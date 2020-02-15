@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\TeamProgramm;
+use App\Entity\Team;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method TeamProgramm|null find($id, $lockMode = null, $lockVersion = null)
- * @method TeamProgramm|null findOneBy(array $criteria, array $orderBy = null)
- * @method TeamProgramm[]    findAll()
- * @method TeamProgramm[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Team|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Team|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Team[]    findAll()
+ * @method Team[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TeamProgrammRepository extends ServiceEntityRepository
+class TeamRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TeamProgramm::class);
+        parent::__construct($registry, Team::class);
     }
 
     // /**
-    //  * @return TeamProgramm[] Returns an array of TeamProgramm objects
+    //  * @return Team[] Returns an array of Team objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class TeamProgrammRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?TeamProgramm
+    public function findOneBySomeField($value): ?Team
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

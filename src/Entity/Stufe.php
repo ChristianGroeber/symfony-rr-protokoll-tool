@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,83 +17,45 @@ class Stufe
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Gruppe", mappedBy="stufe")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $gruppen;
+    private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Abzeichen", mappedBy="stufe")
+     * @ORM\OneToOne(targetEntity="App\Entity\Abzeichen", mappedBy="stufe", cascade={"persist", "remove"})
      */
     private $abzeichen;
-
-    public function __construct()
-    {
-        $this->gruppen = new ArrayCollection();
-        $this->abzeichen = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection|Gruppe[]
-     */
-    public function getGruppen(): Collection
+    public function getName(): ?string
     {
-        return $this->gruppen;
+        return $this->name;
     }
 
-    public function addGruppen(Gruppe $gruppen): self
+    public function setName(?string $name): self
     {
-        if (!$this->gruppen->contains($gruppen)) {
-            $this->gruppen[] = $gruppen;
-            $gruppen->setStufe($this);
-        }
+        $this->name = $name;
 
         return $this;
     }
 
-    public function removeGruppen(Gruppe $gruppen): self
-    {
-        if ($this->gruppen->contains($gruppen)) {
-            $this->gruppen->removeElement($gruppen);
-            // set the owning side to null (unless already changed)
-            if ($gruppen->getStufe() === $this) {
-                $gruppen->setStufe(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Abzeichen[]
-     */
-    public function getAbzeichen(): Collection
+    public function getAbzeichen(): ?Abzeichen
     {
         return $this->abzeichen;
     }
 
-    public function addAbzeichen(Abzeichen $abzeichen): self
+    public function setAbzeichen(?Abzeichen $abzeichen): self
     {
-        if (!$this->abzeichen->contains($abzeichen)) {
-            $this->abzeichen[] = $abzeichen;
-            $abzeichen->setStufe($this);
-        }
+        $this->abzeichen = $abzeichen;
 
-        return $this;
-    }
-
-    public function removeAbzeichen(Abzeichen $abzeichen): self
-    {
-        if ($this->abzeichen->contains($abzeichen)) {
-            $this->abzeichen->removeElement($abzeichen);
-            // set the owning side to null (unless already changed)
-            if ($abzeichen->getStufe() === $this) {
-                $abzeichen->setStufe(null);
-            }
+        // set (or unset) the owning side of the relation if necessary
+        $newStufe = null === $abzeichen ? null : $this;
+        if ($abzeichen->getStufe() !== $newStufe) {
+            $abzeichen->setStufe($newStufe);
         }
 
         return $this;

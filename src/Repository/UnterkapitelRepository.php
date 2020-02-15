@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\UnterThema;
+use App\Entity\Unterkapitel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method UnterThema|null find($id, $lockMode = null, $lockVersion = null)
- * @method UnterThema|null findOneBy(array $criteria, array $orderBy = null)
- * @method UnterThema[]    findAll()
- * @method UnterThema[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Unterkapitel|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Unterkapitel|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Unterkapitel[]    findAll()
+ * @method Unterkapitel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UnterThemaRepository extends ServiceEntityRepository
+class UnterkapitelRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, UnterThema::class);
+        parent::__construct($registry, Unterkapitel::class);
     }
 
     // /**
-    //  * @return UnterThema[] Returns an array of UnterThema objects
+    //  * @return Unterkapitel[] Returns an array of Unterkapitel objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class UnterThemaRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?UnterThema
+    public function findOneBySomeField($value): ?Unterkapitel
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')

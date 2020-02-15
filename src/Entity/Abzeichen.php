@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,29 +17,47 @@ class Abzeichen
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stufe", inversedBy="abzeichen")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bild;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Stufe", inversedBy="abzeichen", cascade={"persist", "remove"})
      */
     private $stufe;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Aufgabe", mappedBy="abzeichen")
-     */
-    private $aufgaben;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Thema", mappedBy="abzeichen")
-     */
-    private $themen;
-
-    public function __construct()
-    {
-        $this->aufgaben = new ArrayCollection();
-        $this->themen = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getBild(): ?string
+    {
+        return $this->bild;
+    }
+
+    public function setBild(?string $bild): self
+    {
+        $this->bild = $bild;
+
+        return $this;
     }
 
     public function getStufe(): ?Stufe
@@ -52,68 +68,6 @@ class Abzeichen
     public function setStufe(?Stufe $stufe): self
     {
         $this->stufe = $stufe;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Aufgabe[]
-     */
-    public function getAufgaben(): Collection
-    {
-        return $this->aufgaben;
-    }
-
-    public function addAufgaben(Aufgabe $aufgaben): self
-    {
-        if (!$this->aufgaben->contains($aufgaben)) {
-            $this->aufgaben[] = $aufgaben;
-            $aufgaben->setAbzeichen($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAufgaben(Aufgabe $aufgaben): self
-    {
-        if ($this->aufgaben->contains($aufgaben)) {
-            $this->aufgaben->removeElement($aufgaben);
-            // set the owning side to null (unless already changed)
-            if ($aufgaben->getAbzeichen() === $this) {
-                $aufgaben->setAbzeichen(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Thema[]
-     */
-    public function getThemen(): Collection
-    {
-        return $this->themen;
-    }
-
-    public function addTheman(Thema $theman): self
-    {
-        if (!$this->themen->contains($theman)) {
-            $this->themen[] = $theman;
-            $theman->setAbzeichen($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTheman(Thema $theman): self
-    {
-        if ($this->themen->contains($theman)) {
-            $this->themen->removeElement($theman);
-            // set the owning side to null (unless already changed)
-            if ($theman->getAbzeichen() === $this) {
-                $theman->setAbzeichen(null);
-            }
-        }
 
         return $this;
     }

@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+{{ include('include/navbar.html.twig') }}
+<div id="main">
+    <table class="head-table">
+        <tbody>
+        <tr>
+            <td class="nav-btn-cell">
+                <a href="javascript:void(0)" class="openbtn" onclick="openNav()"><img src="{{ asset('build/images/hamburger.png') }}" height="50" width="50" alt="nav"></a>
+
+            </td>
+            <td class="title-cell">
+                <h1>{{ block('title') }}</h1>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% block body %}{% endblock %}
+</div>
+{% block javascripts %}
+    <script src="{{ asset('js/custom.js') }}"></script>
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+</body>
 </html>

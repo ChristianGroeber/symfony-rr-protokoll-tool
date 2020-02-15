@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\TagesProgramm;
+use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method TagesProgramm|null find($id, $lockMode = null, $lockVersion = null)
- * @method TagesProgramm|null findOneBy(array $criteria, array $orderBy = null)
- * @method TagesProgramm[]    findAll()
- * @method TagesProgramm[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Tag|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Tag|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Tag[]    findAll()
+ * @method Tag[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TagesProgrammRepository extends ServiceEntityRepository
+class TagRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TagesProgramm::class);
+        parent::__construct($registry, Tag::class);
     }
 
     // /**
-    //  * @return TagesProgramm[] Returns an array of TagesProgramm objects
+    //  * @return Tag[] Returns an array of Tag objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class TagesProgrammRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?TagesProgramm
+    public function findOneBySomeField($value): ?Tag
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

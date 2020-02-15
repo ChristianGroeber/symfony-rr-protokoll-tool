@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Logbuch;
+use App\Entity\Lager;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Logbuch|null find($id, $lockMode = null, $lockVersion = null)
- * @method Logbuch|null findOneBy(array $criteria, array $orderBy = null)
- * @method Logbuch[]    findAll()
- * @method Logbuch[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Lager|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Lager|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Lager[]    findAll()
+ * @method Lager[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class LogbuchRepository extends ServiceEntityRepository
+class LagerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Logbuch::class);
+        parent::__construct($registry, Lager::class);
     }
 
     // /**
-    //  * @return Logbuch[] Returns an array of Logbuch objects
+    //  * @return Lager[] Returns an array of Lager objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class LogbuchRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Logbuch
+    public function findOneBySomeField($value): ?Lager
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.exampleField = :val')
