@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% if title is not defined %}
+        {% set title = 'Protokoll' %}
+    {% endif %}
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{{ title }}</title>
     {% block stylesheets %}
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
@@ -18,7 +21,7 @@
 
             </td>
             <td class="title-cell">
-                <h1>{{ block('title') }}</h1>
+                <h1>{{ title }}</h1>
 
             </td>
         </tr>

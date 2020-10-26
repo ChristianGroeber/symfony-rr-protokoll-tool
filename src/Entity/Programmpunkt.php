@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,6 +31,17 @@ class Programmpunkt extends Event
      * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="programmpunkte")
      */
     private $event;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Leiter::class, inversedBy="programmpunkts")
+     */
+    private $verantwortlichePersonen;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->verantwortlichePersonen = new ArrayCollection();
+    }
 
     public function getTitel(): ?string
     {
@@ -74,6 +87,32 @@ class Programmpunkt extends Event
     public function setEvent(?Event $event): self
     {
         $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Leiter[]
+     */
+    public function getVerantwortlichePersonen(): Collection
+    {
+        return $this->verantwortlichePersonen;
+    }
+
+    public function addVerantwortlichePersonen(Leiter $verantwortlichePersonen): self
+    {
+        if (!$this->verantwortlichePersonen->contains($verantwortlichePersonen)) {
+            $this->verantwortlichePersonen[] = $verantwortlichePersonen;
+        }
+
+        return $this;
+    }
+
+    public function removeVerantwortlichePersonen(Leiter $verantwortlichePersonen): self
+    {
+        if ($this->verantwortlichePersonen->contains($verantwortlichePersonen)) {
+            $this->verantwortlichePersonen->removeElement($verantwortlichePersonen);
+        }
 
         return $this;
     }

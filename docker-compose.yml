@@ -1,0 +1,49 @@
+version:  '3'
+services:
+    mysql:
+        image: mysql:8
+        container_name: prot_mysql
+        restart: on-failure
+        ports:
+            - 3308:3306
+        volumes:
+            - datavolume:/var/lib/mysql
+            - /etc/timezone:/etc/timezone:ro
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            TZ: Europe/Zurich
+    php:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+            args:
+                USER_ID: 1000
+                GROUP_ID: 1000
+        container_name: prot_php
+        restart: on-failure
+        volumes:
+            - ./docker/apache/httpd.conf:/etc/apache2/sites-enabled/custom.httpd.conf.conf
+            - ./:/var/www/html
+            - /etc/localtime:/etc/localtime:ro
+        depends_on:
+            - mysql
+        ports:
+            - "86:80"
+        environment:
+            DATABASE_URL: mysql://root:root@mysql:3306/protokoll
+            DOCUMENT_ROOT: /var/www/html
+            APP_ENV: ${APP_ENV}
+    yarn:
+        image: node:13-alpine
+        container_name: prot_yarn
+        ports:
+            - "${DEV_SERVER_PORT:-8081}:8080"
+        volumes:
+            - ./:/usr/src/app
+        depends_on:
+            - php
+        working_dir: /usr/src/app
+        command: [sh, -c, "yarn install && yarn encore dev --watch"]
+volumes:
+    datavolume:
+        external: false

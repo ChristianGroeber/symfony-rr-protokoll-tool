@@ -19,7 +19,7 @@ class Team
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Leiter", inversedBy="team", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Leiter", inversedBy="team", cascade={"persist"})
      */
     private $gruppenLeiter;
 
@@ -37,6 +37,11 @@ class Team
      * @ORM\OneToMany(targetEntity="App\Entity\Teamzeit", mappedBy="team")
      */
     private $teamzeiten;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
 
     public function __construct()
     {
@@ -151,6 +156,18 @@ class Team
                 $teamzeiten->setTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

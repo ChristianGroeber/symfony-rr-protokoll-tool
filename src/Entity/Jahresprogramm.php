@@ -16,8 +16,25 @@ class Jahresprogramm
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $jahr;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getJahr(): ?int
+    {
+        return $this->jahr;
+    }
+
+    public function setJahr(?int $jahr): self
+    {
+        $this->jahr = $jahr;
+
+        return $this;
     }
 }

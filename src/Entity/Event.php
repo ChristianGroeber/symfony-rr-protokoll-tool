@@ -43,6 +43,11 @@ class Event
      */
     private $programmpunkte;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Leiter::class, inversedBy="events")
+     */
+    private $verantwortlichePerson;
+
     public function __construct()
     {
         $this->programmpunkte = new ArrayCollection();
@@ -106,5 +111,43 @@ class Event
         }
 
         return $this;
+    }
+
+    public function getVerantwortlichePerson(): ?Leiter
+    {
+        return $this->verantwortlichePerson;
+    }
+
+    public function setVerantwortlichePerson(?Leiter $verantwortlichePerson): self
+    {
+        $this->verantwortlichePerson = $verantwortlichePerson;
+
+        return $this;
+    }
+
+    public function toArray()
+    {
+        $ret = [
+            'id' => $this->id,
+            'dateStart' => '1970-01-01',
+            'dateEnd' => '1970-01-01',
+            'programmpunkte' => [],
+            'verantwortlichePerson' => [],
+        ];
+
+        if ($this->getDateStart()) {
+            $ret['dateStart'] = $this->getDateStart()->format('Y-m-d H:i:s');
+        }
+        if ($this->getDateEnd()) {
+            $ret['dateEnd'] = $this->getDateEnd()->format('Y-m-d H:i:s');
+        }
+        foreach ($this->getProgrammpunkte() as $punkt) {
+            array_push($ret['programmpunkte'], $punkt->toArray());
+        }
+        if ($this->getVerantwortlichePerson()) {
+            $ret['verantwortlichePerson'] = $this->getVerantwortlichePerson()->toArray();
+        }
+
+        return $ret;
     }
 }

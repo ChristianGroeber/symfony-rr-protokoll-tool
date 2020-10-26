@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -29,7 +31,7 @@ class Leiter implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 
@@ -57,6 +59,22 @@ class Leiter implements UserInterface
      * @ORM\OneToOne(targetEntity="App\Entity\Team", mappedBy="gruppenLeiter", cascade={"persist", "remove"})
      */
     private $team;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="verantwortlichePerson")
+     */
+    private $events;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Programmpunkt::class, mappedBy="verantwortlichePersonen")
+     */
+    private $programmpunkte;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+        $this->programmpunkte = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -200,5 +218,85 @@ class Leiter implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setVerantwortlichePerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->contains($event)) {
+            $this->events->removeElement($event);
+            // set the owning side to null (unless already changed)
+            if ($event->getVerantwortlichePerson() === $this) {
+                $event->setVerantwortlichePerson(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Programmpunkt[]
+     */
+    public function getProgrammpunkte(): Collection
+    {
+        return $this->programmpunkte;
+    }
+
+    public function addProgrammpunkt(Programmpunkt $programmpunkt): self
+    {
+        if (!$this->programmpunkte->contains($programmpunkt)) {
+            $this->programmpunkte[] = $programmpunkt;
+            $programmpunkt->addVerantwortlichePersonen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgrammpunkt(Programmpunkt $programmpunkt): self
+    {
+        if ($this->programmpunkte->contains($programmpunkt)) {
+            $this->programmpunkte->removeElement($programmpunkt);
+            $programmpunkt->removeVerantwortlichePersonen($this);
+        }
+
+        return $this;
+    }
+
+    public function toArray() {
+        $ret = [
+            'id' => $this->id,
+            'vorname' => $this->getVorname(),
+            'nachname' => $this->getName(),
+            'email' => $this->getEmail(),
+            'mobile' => $this->getMobile(),
+            'geburtsdatum' => '1970-01-01',
+            'team' => 0,
+        ];
+
+        if ($this->getGeburtsdatum()) {
+            $ret['geburtsdatum'] = $this->getGeburtsdatum()->format('Y-m-d');
+        }
+        if ($this->getTeam()) {
+            $ret['team'] = $this->getTeam()->getId();
+        }
+
+        return $ret;
     }
 }

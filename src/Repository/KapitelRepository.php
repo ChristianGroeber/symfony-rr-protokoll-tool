@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Kapitel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Kapitel|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,33 +18,4 @@ class KapitelRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Kapitel::class);
     }
-
-    // /**
-    //  * @return Kapitel[] Returns an array of Kapitel objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('k')
-            ->andWhere('k.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('k.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Kapitel
-    {
-        return $this->createQueryBuilder('k')
-            ->andWhere('k.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

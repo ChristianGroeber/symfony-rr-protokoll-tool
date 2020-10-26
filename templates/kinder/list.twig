@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="text-right">
+        <a class="btn btn-primary" href="{{ path('kinder_add') }}">+</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for kind in kinder %}
+            <tr>
+                <td>{{ kind.id }}</td>
+                <td>{{ kind.vorname }}</td>
+                <td>{{ kind.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

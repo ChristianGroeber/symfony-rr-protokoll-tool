@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="text-right">
+        <a class="btn btn-primary" href="{{ path('programme_add') }}">+</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Tageschef</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for prog in programme %}
+            <tr>
+                <td>{{ prog.id }}</td>
+                <td>{{ prog.dateStart|date('d.m.Y') }}</td>
+                <td>{{ prog. }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
